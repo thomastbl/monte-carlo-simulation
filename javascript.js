@@ -6,9 +6,9 @@ let mousePosition = {
   y: 0,
 };
 
-const canvasData = canvas.getBoundingClientRect();
-
 canvas.addEventListener("mousemove", (event) => {
+  const canvasData = canvas.getBoundingClientRect();
+
   mousePosition.x = event.clientX - canvasData.x;
   mousePosition.y = event.clientY - canvasData.y;
 });
