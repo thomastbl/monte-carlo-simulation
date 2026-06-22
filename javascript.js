@@ -6,9 +6,15 @@ let mousePosition = {
   y: 0,
 };
 
-canvas.addEventListener("mousemove", (event) => {
+ctx.beginPath();
+ctx.moveTo(mousePosition.x, mousePosition.y);
+
+canvas.addEventListener("click", (event) => {
   const canvasData = canvas.getBoundingClientRect();
 
   mousePosition.x = event.clientX - canvasData.x;
   mousePosition.y = event.clientY - canvasData.y;
+  ctx.lineTo(mousePosition.x, mousePosition.y);
+
+  ctx.stroke();
 });
