@@ -42,7 +42,6 @@ function savePointInFigure(x, y) {
     x: x,
     y: y,
   };
-  console.log(currentPoint);
   currentFigure.push(currentPoint);
 }
 
@@ -63,7 +62,6 @@ canvas.addEventListener("click", (event) => {
 const endDrawingButton = document.getElementById("end-drawing");
 endDrawingButton.addEventListener("click", (event) => {
   endDraw(originMousePosition);
-  console.log(currentFigure);
   figuresArray.push(currentFigure);
   console.log(figuresArray);
   originMousePosition = null;
