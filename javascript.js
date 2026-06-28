@@ -3,6 +3,9 @@ const ctx = canvas.getContext("2d");
 
 let originMousePosition = null;
 let startPosition = null;
+let currentFigure = [];
+let currentPoint = null;
+const figuresArray = [];
 
 function saveOriginPoint(event) {
   originMousePosition = getMousePositionInCanvas(event);
@@ -34,21 +37,37 @@ function endDraw(originMousePosition) {
   ctx.stroke();
 }
 
+function savePointInFigure(x, y) {
+  currentPoint = {
+    x: x,
+    y: y,
+  };
+  console.log(currentPoint);
+  currentFigure.push(currentPoint);
+}
+
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
 
   if (originMousePosition === null) {
     saveOriginPoint(event);
     startPosition = originMousePosition;
+    savePointInFigure(originMousePosition.x, originMousePosition.y);
   } else {
     draw(mousePosition, originMousePosition);
     originMousePosition = mousePosition;
+    savePointInFigure(mousePosition.x, mousePosition.y);
   }
 });
 
 const endDrawingButton = document.getElementById("end-drawing");
 endDrawingButton.addEventListener("click", (event) => {
   endDraw(originMousePosition);
+  console.log(currentFigure);
+  figuresArray.push(currentFigure);
+  console.log(figuresArray);
   originMousePosition = null;
   startPosition = null;
+  currentFigure = [];
+  currentPoint = null;
 });
