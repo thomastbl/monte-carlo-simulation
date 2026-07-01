@@ -7,8 +7,24 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <h1>Méthode de Monte-Carlo : estimer l'aire de polygones quelconques</h1>
+    <p>// Le projet est en cours de développement //</p>
+    <h3>
+      Dessinez un ou plusieurs polygones quelconques directement sur le canvas :
+      chaque clic ajoute un sommet, et le bouton ferme la figure. l'outil de
+      dessin est fonctionnel, et l'algorithme de détection des points à
+      l'intérieur ou à l'extérieur des figures (ray casting) est en cours
+      d'implémentation. <br />À terme, la simulation projettera des points
+      aléatoires pour estimer l'aire de chaque polygone : depuis chaque point,
+      un rayon est lancé, et l'on compte ses intersections avec les arêtes de la
+      figure. Chaque intersection est déterminée grâce au produit vectoriel, qui
+      indique de quel côté d'une arête se trouve le rayon ; un nombre impair
+      d'intersections signifie que le point est à l'intérieur du polygone. La
+      loi des grands nombres, sur laquelle repose la méthode de Monte-Carlo,
+      permettra d'estimer avec précision l'aire totale des figures dessinées.
+    </h3>
     <button id="end-drawing" type="button">Terminer le dessin</button>
-    <canvas id="grid" width="1920" height="1080"></canvas>
+    <canvas id="grid" width="1000" height="1000"></canvas>
     <script src="./javascript.js"></script>
   </body>
 </html>
