@@ -7,6 +7,15 @@ let currentFigure = [];
 let currentPoint = null;
 const figuresArray = [];
 
+// à faire dans l'ordre
+
+// / Mettre en place le repère orthonormé
+// / Construire la mécanique de projection sur le canvas
+// / Utiliser le produit vectoriel pour calculer chaque intersection
+// depuis les point projetés
+// -> Produit vectoriel : d = (Bx - Ax)·(Py - Ay) - (By - Ay)·(Px - Ax)
+// / Intépréter les résultats au regard du nombre de projections
+
 function saveOriginPoint(event) {
   originMousePosition = getMousePositionInCanvas(event);
 }
@@ -17,9 +26,13 @@ function getMousePositionInCanvas(event) {
     y: 0,
   };
 
-  const canvasData = canvas.getBoundingClientRect();
-  mousePosition.x = event.clientX - canvasData.x;
-  mousePosition.y = event.clientY - canvasData.y;
+  const relativeCanvasData = canvas.getBoundingClientRect();
+  mousePosition.x =
+    (event.clientX - relativeCanvasData.x) *
+    (canvas.width / relativeCanvasData.width);
+  mousePosition.y =
+    (event.clientY - relativeCanvasData.y) *
+    (canvas.height / relativeCanvasData.height);
   return mousePosition;
 }
 
