@@ -7,6 +7,7 @@ let startPosition = null;
 let currentFigure = [];
 let currentPoint = null;
 const figuresArray = [];
+let lineWidth = 1;
 
 // à faire dans l'ordre
 
@@ -37,7 +38,9 @@ function getMousePositionInCanvas(event) {
   return mousePosition;
 }
 
-function draw(mousePosition, originMousePosition) {
+function draw(mousePosition, originMousePosition, lineWidth, lineColor) {
+  ctx.lineWidth = lineWidth;
+  ctx.strokeStyle = lineColor;
   ctx.beginPath();
   ctx.moveTo(originMousePosition.x, originMousePosition.y);
   ctx.lineTo(mousePosition.x, mousePosition.y);
@@ -62,24 +65,38 @@ function savePointInFigure(x, y) {
 function coordinatesToPixels(x, y) {
   let x_px = x + 500;
   let y_px = 500 - y;
-  return { x_px, y_px };
+  return { x, y };
 }
 
 function drawGridBackground() {
-  for (let i = 0; i < canvas.width; i += canvas.width % 100) {}
-}
+  for (let i = 0; i <= canvas.width; i += 50) {
+    if (i === 500) {
+      lineWidth = 3;
+    }
+    const start_pixels = coordinatesToPixels(i, 0);
+    const end_pixels = coordinatesToPixels(i, 1000);
+    i === 500
+      ? draw(start_pixels, end_pixels, 3, "black")
+      : draw(start_pixels, end_pixels, 1, "black");
+  }
 
-drawGridBackground();
+  for (let i = 0; i <= canvas.height; i += 50) {
+    const start_pixels = coordinatesToPixels(0, i);
+    const end_pixels = coordinatesToPixels(1000, i);
+    i === 500
+      ? draw(start_pixels, end_pixels, 3, "black")
+      : draw(start_pixels, end_pixels, 1, "black");
+  }
+}
 
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
-
   if (originMousePosition === null) {
     saveOriginPoint(event);
     startPosition = originMousePosition;
     savePointInFigure(originMousePosition.x, originMousePosition.y);
   } else {
-    draw(mousePosition, originMousePosition);
+    draw(mousePosition, originMousePosition, 2, "orange");
     originMousePosition = mousePosition;
     savePointInFigure(mousePosition.x, mousePosition.y);
   }
@@ -94,3 +111,5 @@ endDrawingButton.addEventListener("click", (event) => {
   currentFigure = [];
   currentPoint = null;
 });
+
+drawGridBackground();
