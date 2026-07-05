@@ -1,4 +1,5 @@
 const canvas = document.getElementById("grid");
+const endDrawingButton = document.getElementById("end-drawing");
 const ctx = canvas.getContext("2d");
 
 let originMousePosition = null;
@@ -58,6 +59,18 @@ function savePointInFigure(x, y) {
   currentFigure.push(currentPoint);
 }
 
+function coordinatesToPixels(x, y) {
+  let x_px = x + 500;
+  let y_px = 500 - y;
+  return { x_px, y_px };
+}
+
+function drawGridBackground() {
+  for (let i = 0; i < canvas.width; i += canvas.width % 100) {}
+}
+
+drawGridBackground();
+
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
 
@@ -72,7 +85,6 @@ canvas.addEventListener("click", (event) => {
   }
 });
 
-const endDrawingButton = document.getElementById("end-drawing");
 endDrawingButton.addEventListener("click", (event) => {
   endDraw(originMousePosition);
   figuresArray.push(currentFigure);
