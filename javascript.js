@@ -1,6 +1,8 @@
 const canvas = document.getElementById("grid");
 const endDrawingButton = document.getElementById("end-drawing");
 const ctx = canvas.getContext("2d");
+const rangeSlider = document.getElementById("rangeSlider");
+const rangeSliderValue = document.getElementById("rangeSliderValue");
 
 let originMousePosition = null;
 let startPosition = null;
@@ -11,7 +13,6 @@ let lineWidth = 1;
 
 // à faire dans l'ordre
 
-// / Mettre en place le repère orthonormé
 // / Construire la mécanique de projection sur le canvas
 // / Utiliser le produit vectoriel pour calculer chaque intersection
 // depuis les point projetés
@@ -89,6 +90,8 @@ function drawGridBackground() {
   }
 }
 
+function projectPoints() {}
+
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
   if (originMousePosition === null) {
@@ -110,6 +113,11 @@ endDrawingButton.addEventListener("click", (event) => {
   startPosition = null;
   currentFigure = [];
   currentPoint = null;
+});
+
+rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
+rangeSlider.addEventListener("input", (event) => {
+  rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
 });
 
 drawGridBackground();
