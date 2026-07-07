@@ -99,13 +99,14 @@ canvas.addEventListener("click", (event) => {
     startPosition = originMousePosition;
     savePointInFigure(originMousePosition.x, originMousePosition.y);
   } else {
-    draw(mousePosition, originMousePosition, 2, "orange");
+    draw(mousePosition, originMousePosition, 2, "blue");
     originMousePosition = mousePosition;
     savePointInFigure(mousePosition.x, mousePosition.y);
   }
 });
 
 endDrawingButton.addEventListener("click", (event) => {
+  console.clear();
   endDraw(originMousePosition);
   figuresArray.push(currentFigure);
   console.log(figuresArray);
