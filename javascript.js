@@ -92,6 +92,10 @@ function drawGridBackground() {
 
 function projectPoints() {}
 
+function updateRangeSliderDisplay() {
+  rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
+}
+
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
   if (originMousePosition === null) {
@@ -116,9 +120,7 @@ endDrawingButton.addEventListener("click", (event) => {
   currentPoint = null;
 });
 
-rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
-rangeSlider.addEventListener("input", (event) => {
-  rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
-});
+updateRangeSliderDisplay();
+rangeSlider.addEventListener("input", updateRangeSliderDisplay);
 
 drawGridBackground();
