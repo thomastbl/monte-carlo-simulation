@@ -5,6 +5,9 @@ const rangeSlider = document.getElementById("rangeSlider");
 const rangeSliderValue = document.getElementById("rangeSliderValue");
 const projectionButtonStart = document.getElementById("projectionButtonStart");
 const projectionButtonStop = document.getElementById("projectionButtonStop");
+const dotCountSpan = document.getElementById("dotCountSpan");
+const step = document.getElementById("step");
+const stepDisplay = document.getElementById("stepDisplay");
 const figuresArray = [];
 
 let originMousePosition = null;
@@ -13,6 +16,7 @@ let currentFigure = [];
 let currentPoint = null;
 let lineWidth = 1;
 let interval_ID = null;
+let dotCount = 0;
 
 // à faire dans l'ordre
 
@@ -107,6 +111,10 @@ function updateRangeSliderDisplay() {
   rangeSliderValue.textContent = `${rangeSlider.value} points projetés par secondes`;
 }
 
+function updateStepsDisplay() {
+  stepDisplay.textContent = `${step.value} steps`;
+}
+
 canvas.addEventListener("click", (event) => {
   let mousePosition = getMousePositionInCanvas(event);
   if (originMousePosition === null) {
@@ -133,11 +141,13 @@ endDrawingButton.addEventListener("click", () => {
 
 projectionButtonStart.addEventListener("click", () => {
   clearInterval(interval_ID);
-  let dotCount = 0;
   interval_ID = setInterval(() => {
-    drawRandomDot("red", 7, 7);
-    dotCount++;
-  }, 1);
+    for (let i = 0; i < step.value; i++) {
+      drawRandomDot("red", 5, 5);
+      dotCount++;
+    }
+    dotCountSpan.textContent = dotCount;
+  }, 1000 / rangeSlider.value);
 });
 
 projectionButtonStop.addEventListener("click", () => {
@@ -146,5 +156,8 @@ projectionButtonStop.addEventListener("click", () => {
 
 updateRangeSliderDisplay();
 rangeSlider.addEventListener("input", updateRangeSliderDisplay);
+
+updateStepsDisplay();
+step.addEventListener("input", updateStepsDisplay);
 
 drawGridBackground();

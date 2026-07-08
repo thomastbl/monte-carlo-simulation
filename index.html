@@ -30,27 +30,38 @@
       </h3>
     </div>
     <div class="card">
-      <button id="end-drawing" type="button" title="Permet de fermer la figure">
-        Terminer la figure
-      </button>
       <div>
-        <input type="range" min="1" max="100" value="1" id="rangeSlider" />
-        <span id="rangeSliderValue"></span>
         <button
-          id="projectionButtonStart"
+          id="end-drawing"
           type="button"
-          title="Permet de démarrer la projection de points"
+          title="Permet de fermer la figure"
         >
-          Démarrer la projection
-        </button>
-        <button
-          id="projectionButtonStop"
-          type="button"
-          title="Permet de stopper la projection de points"
-        >
-          Stopper la projection
+          Terminer la figure
         </button>
       </div>
+      <div>
+        <input type="range" min="1" max="1000" value="1" id="rangeSlider" />
+        <span id="rangeSliderValue"></span>
+      </div>
+      <div>
+        <input type="range" min="1" max="10" value="1" id="step" />
+        <span id="stepDisplay"></span>
+      </div>
+      <button
+        id="projectionButtonStart"
+        type="button"
+        title="Permet de démarrer la projection de points"
+      >
+        Démarrer la projection
+      </button>
+      <button
+        id="projectionButtonStop"
+        type="button"
+        title="Permet de stopper la projection de points"
+      >
+        Stopper la projection
+      </button>
+      <span id="dotCountSpan"></span>
     </div>
     <div class="card canvas">
       <canvas id="grid" width="1000" height="1000"></canvas>
