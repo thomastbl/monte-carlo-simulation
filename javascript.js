@@ -3,6 +3,7 @@ const endDrawingButton = document.getElementById("end-drawing");
 const ctx = canvas.getContext("2d");
 const rangeSlider = document.getElementById("rangeSlider");
 const rangeSliderValue = document.getElementById("rangeSliderValue");
+const projectionButtonStart = document.getElementById("projectionButtonStart");
 
 let originMousePosition = null;
 let startPosition = null;
@@ -90,7 +91,15 @@ function drawGridBackground() {
   }
 }
 
-function projectPoints() {}
+function drawRandomDot(color, xDotWidth, yDotWidth) {
+  const randomDot = {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+  };
+
+  ctx.fillStyle = color;
+  ctx.fillRect(randomDot.x, randomDot.y, xDotWidth, yDotWidth);
+}
 
 function updateRangeSliderDisplay() {
   rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
@@ -109,7 +118,7 @@ canvas.addEventListener("click", (event) => {
   }
 });
 
-endDrawingButton.addEventListener("click", (event) => {
+endDrawingButton.addEventListener("click", () => {
   console.clear();
   endDraw(originMousePosition);
   figuresArray.push(currentFigure);
@@ -118,6 +127,10 @@ endDrawingButton.addEventListener("click", (event) => {
   startPosition = null;
   currentFigure = [];
   currentPoint = null;
+});
+
+projectionButtonStart.addEventListener("click", () => {
+  drawRandomDot("red", 7, 7);
 });
 
 updateRangeSliderDisplay();
