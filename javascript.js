@@ -4,13 +4,15 @@ const ctx = canvas.getContext("2d");
 const rangeSlider = document.getElementById("rangeSlider");
 const rangeSliderValue = document.getElementById("rangeSliderValue");
 const projectionButtonStart = document.getElementById("projectionButtonStart");
+const projectionButtonStop = document.getElementById("projectionButtonStop");
+const figuresArray = [];
 
 let originMousePosition = null;
 let startPosition = null;
 let currentFigure = [];
 let currentPoint = null;
-const figuresArray = [];
 let lineWidth = 1;
+let interval_ID = null;
 
 // à faire dans l'ordre
 
@@ -102,7 +104,7 @@ function drawRandomDot(color, xDotWidth, yDotWidth) {
 }
 
 function updateRangeSliderDisplay() {
-  rangeSliderValue.textContent = `${rangeSlider.value} points projetés par ticks`;
+  rangeSliderValue.textContent = `${rangeSlider.value} points projetés par secondes`;
 }
 
 canvas.addEventListener("click", (event) => {
@@ -130,7 +132,16 @@ endDrawingButton.addEventListener("click", () => {
 });
 
 projectionButtonStart.addEventListener("click", () => {
-  drawRandomDot("red", 7, 7);
+  clearInterval(interval_ID);
+  let dotCount = 0;
+  interval_ID = setInterval(() => {
+    drawRandomDot("red", 7, 7);
+    dotCount++;
+  }, 1);
+});
+
+projectionButtonStop.addEventListener("click", () => {
+  clearInterval(interval_ID);
 });
 
 updateRangeSliderDisplay();
