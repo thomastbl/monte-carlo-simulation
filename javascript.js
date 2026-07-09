@@ -24,13 +24,6 @@ let dotCount = 0;
 let insideDotCount = 0;
 let outsideDotCount = 0;
 
-// à faire dans l'ordre
-
-// / Utiliser le produit vectoriel pour calculer chaque intersection
-// depuis les point projetés
-// -> Produit vectoriel : d = (Bx - Ax)·(Py - Ay) - (By - Ay)·(Px - Ax)
-// / Intépréter les résultats au regard du nombre de projections
-
 function saveOriginPoint(event) {
   originMousePosition = getMousePositionInCanvas(event);
 }
@@ -179,10 +172,8 @@ canvas.addEventListener("click", (event) => {
 });
 
 endDrawingButton.addEventListener("click", () => {
-  console.clear();
   endDraw(originMousePosition);
   figuresArray.push(currentFigure);
-  console.log(figuresArray);
   originMousePosition = null;
   startPosition = null;
   currentFigure = [];
