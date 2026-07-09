@@ -8,8 +8,12 @@ const projectionButtonStop = document.getElementById("projectionButtonStop");
 const dotCountSpan = document.getElementById("dotCountSpan");
 const step = document.getElementById("step");
 const stepDisplay = document.getElementById("stepDisplay");
+const interiorDotDisplay = document.getElementById("interiorDotDisplay");
+const interiorDotRatio = document.getElementById("interiorDotRatio");
+const results = document.getElementById("results");
 const figuresArray = [];
 
+let randomDotCoordinates = null;
 let originMousePosition = null;
 let startPosition = null;
 let currentFigure = [];
@@ -17,10 +21,11 @@ let currentPoint = null;
 let lineWidth = 1;
 let interval_ID = null;
 let dotCount = 0;
+let insideDotCount = 0;
+let outsideDotCount = 0;
 
 // à faire dans l'ordre
 
-// / Construire la mécanique de projection sur le canvas
 // / Utiliser le produit vectoriel pour calculer chaque intersection
 // depuis les point projetés
 // -> Produit vectoriel : d = (Bx - Ax)·(Py - Ay) - (By - Ay)·(Px - Ax)
@@ -102,9 +107,54 @@ function drawRandomDot(color, xDotWidth, yDotWidth) {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
   };
+  let ratio = (
+    (insideDotCount / (outsideDotCount + insideDotCount)) *
+    100
+  ).toFixed(2);
+  if (isInsideFigure(randomDot)) {
+    ctx.fillStyle = "green";
+    ctx.fillRect(randomDot.x, randomDot.y, xDotWidth, yDotWidth);
+    insideDotCount++;
+  } else {
+    ctx.fillStyle = color;
+    ctx.fillRect(randomDot.x, randomDot.y, xDotWidth, yDotWidth);
+    outsideDotCount++;
+  }
 
-  ctx.fillStyle = color;
-  ctx.fillRect(randomDot.x, randomDot.y, xDotWidth, yDotWidth);
+  const fraction = insideDotCount / (insideDotCount + outsideDotCount);
+  interiorDotDisplay.textContent = `|| ${insideDotCount} points à l'intérieur`;
+  interiorDotRatio.textContent = `|| ${(fraction * 100).toFixed(2)}%`;
+  results.textContent = `Sur un plan de 1 m², l'aire polygonale estimée est de ≈ ${fraction.toFixed(3)} m²`;
+
+  return randomDot;
+}
+
+function isInsideFigure(originCoordinates) {
+  let count = 0;
+
+  for (const figure of figuresArray) {
+    for (const [i, point] of figure.entries()) {
+      const A = point;
+      const B = figure[(i + 1) % figure.length];
+      const ratio = (originCoordinates.y - A.y) / (B.y - A.y);
+      const xInter = A.x + ratio * (B.x - A.x);
+
+      if (
+        A.y <= originCoordinates.y &&
+        B.y > originCoordinates.y &&
+        originCoordinates.x < xInter
+      ) {
+        count++;
+      } else if (
+        A.y > originCoordinates.y &&
+        B.y <= originCoordinates.y &&
+        originCoordinates.x < xInter
+      ) {
+        count--;
+      }
+    }
+  }
+  return count !== 0;
 }
 
 function updateRangeSliderDisplay() {
@@ -143,10 +193,10 @@ projectionButtonStart.addEventListener("click", () => {
   clearInterval(interval_ID);
   interval_ID = setInterval(() => {
     for (let i = 0; i < step.value; i++) {
-      drawRandomDot("red", 5, 5);
+      randomDotCoordinates = drawRandomDot("red", 3, 3);
       dotCount++;
     }
-    dotCountSpan.textContent = dotCount;
+    dotCountSpan.textContent = `${dotCount} points projetés`;
   }, 1000 / rangeSlider.value);
 });
 
