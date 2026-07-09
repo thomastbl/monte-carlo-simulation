@@ -44,10 +44,10 @@ Une fois la proportion de points intérieurs connue, on la multiplie par l'aire 
 ## Utilisation
 
 1. Cliquer sur le canvas pour poser les sommets d'un polygone.
-2. Cliquer sur le bouton Terminer la figure pour le fermer.
+2. Cliquer sur le bouton "Terminer la figure" pour le fermer.
 3. Répéter pour dessiner plusieurs figures si besoin.
 4. Régler la vitesse (points/seconde) et le nombre de points par étape avec les curseurs.
-5. Cliquer sur Démarrer la projection et observer l'estimation se préciser.
+5. Cliquer sur "Démarrer la projection" pour faire apparaître l'estimation de l'aire dessinée.
 
 ---
 
